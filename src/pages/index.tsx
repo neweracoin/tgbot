@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { useTelegram } from "@/lib";
+
 import Layout from '@/components/layout/Layout';
 import ArrowLink from '@/components/links/ArrowLink';
 import ButtonLink from '@/components/links/ButtonLink';
@@ -21,11 +23,25 @@ import Vercel from '~/svg/Vercel.svg';
 // to customize the default configuration.
 
 export default function HomePage() {
+  const { user, webApp } = useTelegram();
+  console.log(user);
   return (
     <Layout>
       {/* <Seo templateTitle='Home' /> */}
       <Seo />
-
+      <div>
+        {user ? (
+          <div>
+            <h1>Welcome {user?.username}</h1>
+            User data:
+            <pre>{JSON.stringify(user, null, 2)}</pre>
+            Eniter Web App data:
+            <pre>{JSON.stringify(webApp, null, 2)}</pre>
+          </div>
+        ) : (
+          <div>Make sure web app is opened from telegram client</div>
+        )}
+      </div>
       <main>
         <section className='bg-white'>
           <div className='layout relative flex min-h-screen flex-col items-center justify-center py-12 text-center'>
